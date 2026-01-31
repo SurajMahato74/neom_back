@@ -14,7 +14,13 @@ class BlogSerializer(serializers.ModelSerializer):
         if obj.featured_image:
             request = self.context.get('request')
             if request:
-                return request.build_absolute_uri(obj.featured_image.url)
+                return (
+                    request.scheme
+                    + "://"
+                    + request.get_host()
+                    + "/api"
+                    + obj.featured_image.url
+                )
         return None
     
     def get_tags_list(self, obj):
@@ -27,14 +33,32 @@ class BlogListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Blog
-        fields = ['id', 'title', 'slug', 'excerpt', 'featured_image_url', 'author', 
-                 'is_featured', 'tags_list', 'read_time', 'views_count', 'published_at', 'created_at']
+        fields = [
+            'id',
+            'title',
+            'slug',
+            'excerpt',
+            'featured_image_url',
+            'author',
+            'is_featured',
+            'tags_list',
+            'read_time',
+            'views_count',
+            'published_at',
+            'created_at',
+        ]
     
     def get_featured_image_url(self, obj):
         if obj.featured_image:
             request = self.context.get('request')
             if request:
-                return request.build_absolute_uri(obj.featured_image.url)
+                return (
+                    request.scheme
+                    + "://"
+                    + request.get_host()
+                    + "/api"
+                    + obj.featured_image.url
+                )
         return None
     
     def get_tags_list(self, obj):
@@ -53,7 +77,13 @@ class BlogDetailSerializer(serializers.ModelSerializer):
         if obj.featured_image:
             request = self.context.get('request')
             if request:
-                return request.build_absolute_uri(obj.featured_image.url)
+                return (
+                    request.scheme
+                    + "://"
+                    + request.get_host()
+                    + "/api"
+                    + obj.featured_image.url
+                )
         return None
     
     def get_tags_list(self, obj):
